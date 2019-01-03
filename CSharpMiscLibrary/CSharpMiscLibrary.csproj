@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>CSharpMiscLibrary</AssemblyName>
+    <RootNamespace>CSharpMiscLibrary</RootNamespace>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ApplicationIcon></ApplicationIcon>
+    <Win32Resource />
+    <Version>1.0.0</Version>
+    <Product>C# Misc Library</Product>
+    <Authors>Davi Kawasaki</Authors>
+    <PackageProjectUrl>https://github.com/davikawasaki/csharp-misc-library</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/davikawasaki/csharp-misc-library/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/davikawasaki/csharp-misc-library/blob/master/LICENSE</RepositoryUrl>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Description>Snippets used for C# projects (database, service, helpers, etc).</Description>
+    <Copyright>Davi Kawasaki 2019</Copyright>
+    <PackageTags>database services helpers csharp connectors</PackageTags>
+    <PreviousVersion>1.0.0</PreviousVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>https:\\github.com\davikawasaki\csharp-misc-library\CSharpMiscLibrary\CSharpMiscLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="CSharpMiscLibrary.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="CSharpMiscLibrary.xml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Bundle.Microsoft.Office.Interop" Version="15.0.4569" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.4.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PostBuildEventDependsOn>
+      $(PostBuildEventDependsOn);
+      PostBuildMacros;
+    </PostBuildEventDependsOn>
+  </PropertyGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Exec Command="call &quot;$(SolutionDir)scripts\backupCSharpOldPackages.bat&quot; $(SolutionDir) &quot;CSharpMiscLibrary\&quot; &quot;bin\Release\&quot; $(TargetFramework) &quot;Versions\&quot; $(PreviousVersion)" />
+  </Target>
+
+  <Target Name="CopyPackage" AfterTargets="Pack" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="...\packages\CSharpMiscLibrary\$(Version)\" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Exec Command="call &quot;$(SolutionDir)scripts\buildCopyCSharpPackages.bat&quot; $(SolutionDir) &quot;CSharpMiscLibrary\&quot; &quot;bin\Release\&quot; $(TargetFramework) &quot;...\packages\CSharpMiscLibrary\&quot; $(Version) &quot;docs\versions\&quot;" />
+  </Target>
+
+</Project>

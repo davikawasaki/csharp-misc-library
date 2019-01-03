@@ -1,0 +1,778 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CSharpMiscLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:CSharpMiscLibrary.APIs.BaseHTTPAPI">
+            <summary>
+            Base class model of a HTTP client.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.GetHttpClient">
+            <summary>
+            Instantiate a http client connection.
+            </summary>
+            <returns>HttpClient connection.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.SetRequestHeadersAcceptRules(System.String)">
+            <summary>
+            Set accepted request headers for a HTTP client connection.
+            </summary>
+            <param name="mediaType">Type of media accepted (e.g. application/json)</param>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.SetTimeout(System.TimeSpan)">
+            <summary>
+            Set timeout for the HTTP client connection.
+            </summary>
+            <param name="timeout">Accepted timeout for the HTTP client connection in TimeSpan.</param>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.GetMethod(System.String,System.Boolean)">
+            <summary>
+            Call GET method from HTTP client.
+            </summary>
+            <param name="uri">URI to be consumed.</param>
+            <param name="continueOnCapturedContext">Awaiter configuration status to continue or not on captured context</param>
+            <returns>Async HttpResponseMessage with details of the request response</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.PostMethod(System.String,System.Net.Http.HttpContent,System.Boolean)">
+            <summary>
+            Call POST method from HTTP client.
+            </summary>
+            <param name="uri">URI to be consumed.</param>
+            <param name="content">Content to be sent.</param>
+            <param name="continueOnCapturedContext">Awaiter configuration status to continue or not on captured context</param>
+            <returns>Async HttpResponseMessage with details of the request response</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.PutMethod(System.String,System.Net.Http.HttpContent,System.Boolean)">
+            <summary>
+            Call PUT method from HTTP client.
+            </summary>
+            <param name="uri">URI to be consumed.</param>
+            <param name="content">Content to be sent.</param>
+            <param name="continueOnCapturedContext">Awaiter configuration status to continue or not on captured context</param>
+            <returns>Async HttpResponseMessage with details of the request response</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.BaseHTTPAPI.DeleteMethod(System.String,System.Boolean)">
+            <summary>
+            Call DELETE method from HTTP client.
+            </summary>
+            <param name="uri">URI to be consumed.</param>
+            <param name="continueOnCapturedContext">Awaiter configuration status to continue or not on captured context</param>
+            <returns>Async HttpResponseMessage with details of the request response</returns>
+        </member>
+        <member name="T:CSharpMiscLibrary.APIs.KapowRESTAPI">
+            <summary>
+            Kapow REST API HTTP model.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.KapowRESTAPI.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.KapowRESTAPI.RunAsyncKapowRobot(System.String,System.String,System.IO.StreamWriter,System.Net.Http.HttpContent,System.String)">
+            <summary>
+            Start async request to start Kapow Robot. Checks for 200 request code, as well as eventual errors from the robot-error JSON attribute.
+            </summary>
+            <param name="robotName">Kapow Robot process name.</param>
+            <param name="uri">Kapow robot public URI to be called.</param>
+            <param name="stw">(Optional) Stream writer to store buffer message from execution.</param>
+            <param name="content">(Optional) HTTP content to be sent.</param>
+            /// <param name="method">(Optional) HTTP method to be used (check ConstantsService for options).</param>
+            <todo>Allow XML as deserializing method option</todo>
+            <todo>Refactor method to return response</todo>
+            <returns>Async task with HTTP response message.</returns>
+        </member>
+        <member name="T:CSharpMiscLibrary.APIs.OfficeAPI">
+            <summary>
+            Class that handles office API communication.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.OfficeAPI._RunGenericVBAMacro(System.Object,System.Object[])">
+            <summary>
+            Generic private method to run a VBA macro independently of Office Application.
+            </summary>
+            <param name="oApp">Office application object</param>
+            <param name="oRunArgs">Office arguments, starting with macro name</param>
+            <returns>Object returned from VBA execution</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.OfficeAPI.RunVBAscript(System.String,System.String,System.String,System.String,System.Object[],System.Boolean,System.Boolean,System.Boolean,System.IO.StreamWriter)">
+            <summary>
+            Call VBA script from one of Office applications.
+            List of accepted apps: Excel, Word, Powerpoint, Outlook
+            </summary>
+            <param name="processName">Name of the process being executed</param>
+            <param name="officeAppName">One of the office app names</param>
+            <param name="filePath">File path with the VBA script to be executed</param>
+            <param name="macroName">VBA script name with module/procedure name</param>
+            <param name="macroArgs">List of object args to be used in the script</param>
+            <param name="showAlerts">Boolean status to show alerts on open application</param>
+            <param name="visibleApp">Boolean status to show open application</param>
+            <param name="saveFile">Boolean status to save or not the file</param>
+            <param name="stw">Stream writer object to output message to stream buffer</param>
+            <returns>Returned string from VBA Main Function</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.OfficeAPI._RunVBAonExcel(System.String,System.String,System.String,System.Object[],System.Boolean,System.Boolean,System.Boolean,System.IO.StreamWriter)">
+            <summary>
+            Call VBA script from an Excel application.
+            </summary>
+            <param name="processName">Name of the process being executed</param>
+            <param name="officeAppName">One of the office app names</param>
+            <param name="filePath">File path with the VBA script to be executed</param>
+            <param name="combinedMacroNameAndArgs">Array of object with VBA script name with module/procedure name and args</param>
+            <param name="showAlerts">Boolean status to show alerts on open application</param>
+            <param name="visibleApp">Boolean status to show open application</param>
+            <param name="saveFile">Boolean status to save or not the file</param>
+            <param name="stw">Stream writer object to output message to stream buffer</param>
+            <returns>Returned string from VBA Main Function</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.OfficeAPI._RunVBAonWord(System.String,System.String,System.String,System.Object[],System.Boolean,System.Boolean,System.Boolean,System.IO.StreamWriter)">
+            <summary>
+            Call VBA script from a Word application.
+            </summary>
+            <param name="processName">Name of the process being executed</param>
+            <param name="officeAppName">One of the office app names</param>
+            <param name="filePath">File path with the VBA script to be executed</param>
+            <param name="combinedMacroNameAndArgs">Array of object with VBA script name with module/procedure name and args</param>
+            <param name="showAlerts">Boolean status to show alerts on open application</param>
+            <param name="visibleApp">Boolean status to show open application</param>
+            <param name="saveFile">Boolean status to save or not the file</param>
+            <param name="stw">Stream writer object to output message to stream buffer</param>
+            <returns>Returned string from VBA Main Function</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.OfficeAPI._RunVBAonPowerpoint(System.String,System.String,System.String,System.Object[],System.Boolean,System.Boolean,System.Boolean,System.IO.StreamWriter)">
+            <summary>
+            Call VBA script from a Powerpoint application.
+            </summary>
+            <param name="processName">Name of the process being executed</param>
+            <param name="officeAppName">One of the office app names</param>
+            <param name="filePath">File path with the VBA script to be executed</param>
+            <param name="combinedMacroNameAndArgs"> Array of object with VBA script name with module/procedure name and args</param>
+            <param name="showAlerts">Boolean status to show alerts on open application</param>
+            <param name="visibleApp">Boolean status to show open application</param>
+            <param name="saveFile">Boolean status to save or not the file</param>
+            <param name="stw">Stream writer object to output message to stream buffer</param>
+            <returns>Returned string from VBA Main Function</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.APIs.OfficeAPI._RunVBAonOutlook(System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.IO.StreamWriter)">
+            <summary>
+            Call VBA script from an Outlook application.
+            </summary>
+            <param name="processName">Name of the process being executed</param>
+            <param name="officeAppName">One of the office app names</param>
+            <param name="filePath">File path with the VBA script to be executed</param>
+            <param name="macroName">VBA script name with module/procedure name</param>
+            <param name="showAlerts">Boolean status to show alerts on open application</param>
+            <param name="visibleApp">Boolean status to show open application</param>
+            <param name="saveFile">Boolean status to save or not the file</param>
+            <param name="stw">Stream writer object to output message to stream buffer</param>
+            <returns>Returned string from VBA Main Function</returns>
+        </member>
+        <member name="T:CSharpMiscLibrary.Classes.APIs.KapowAttributeResponse">
+            <summary>
+            Kapow default response detailed attributes.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowAttributeResponse.type">
+            <summary>
+            Type from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowAttributeResponse.name">
+            <summary>
+            Name from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowAttributeResponse.value">
+            <summary>
+            Value from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="T:CSharpMiscLibrary.Classes.APIs.KapowResponse">
+            <summary>
+            Kapow default HTTP response.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowResponse.executionTime">
+            <summary>
+            Execution time response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowResponse.robotError">
+            <summary>
+            Robot error object from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowResponse.values">
+            <summary>
+            List of returned values from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="T:CSharpMiscLibrary.Classes.APIs.KapowValueResponse">
+            <summary>
+            Kapow default response value details.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowValueResponse.typeName">
+            <summary>
+            Type value response name from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.KapowValueResponse.attribute">
+            <summary>
+            Kapow attribute response object from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="T:CSharpMiscLibrary.Classes.APIs.RobotError">
+            <summary>
+            Kapow default error response object.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.RobotError.date">
+            <summary>
+            Date from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.RobotError.robotUrl">
+            <summary>
+            Robot URL from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.RobotError.errorMessage">
+            <summary>
+            Error message from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.RobotError.errorLocation">
+            <summary>
+            Error location from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.APIs.RobotError.errorLocationCode">
+            <summary>
+            Error location code from response property (needs to start with undercase).
+            </summary>
+        </member>
+        <member name="T:CSharpMiscLibrary.Classes.Excel.ExcelHeaderBinding">
+            <summary>
+            Class to store Excel header value and column position.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.Excel.ExcelHeaderBinding.Value">
+            <summary>
+            Excel header column value.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.Excel.ExcelHeaderBinding.Pos">
+            <summary>
+            Excel header column position.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Classes.Excel.ExcelHeaderBinding.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Classes.Excel.ExcelHeaderBinding.#ctor(System.String,System.Int32)">
+            <summary>
+            Excel header binding constructor.
+            </summary>
+            <param name="Value">Excel header column value.</param>
+            <param name="Pos">Excel header column position.</param>
+        </member>
+        <member name="T:CSharpMiscLibrary.Classes.Excel.ExcelPairMatch">
+            <summary>
+            Excel pair match between two cells positions.
+            Inherits ExcelHeaderBinding to store cell column position and value.
+            If binding is set, it needs to store also the comparison module and method to be called.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Classes.Excel.ExcelPairMatch.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Classes.Excel.ExcelPairMatch.#ctor(System.Int32,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Constructor to set pair value-pos of cell and the binding cell to be matched. If there's a binding cell, sets the comparison module and method.
+            </summary>
+            <param name="ColPos">Column position on Excel sheet.</param>
+            <param name="ColValue">Column value on Excel sheet.</param>
+            <param name="ColBind">Column binding to be matched on Excel sheet.</param>
+            <param name="ComparisonModule">Module to be used in the comparison.</param>
+            <param name="ComparisonMethod">Method to be used in the comparison.</param>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.Excel.ExcelPairMatch.ColBind">
+            <summary>
+            Column binding to be matched on Excel sheet.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.Excel.ExcelPairMatch.ComparisonModule">
+            <summary>
+            Module to be used in the comparison.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Classes.Excel.ExcelPairMatch.ComparisonMethod">
+            <summary>
+            Method to be used in the comparison.
+            </summary>
+        </member>
+        <member name="T:CSharpMiscLibrary.Exceptions.InvalidEqualityException">
+            <summary>
+            Invalid equality custom exception.
+            </summary>
+        </member>
+        <member name="T:CSharpMiscLibrary.Repositories.BaseRepository">
+            <summary>
+            Database connector using Dapper ORM.
+            </summary>
+        </member>
+        <member name="P:CSharpMiscLibrary.Repositories.BaseRepository.SqlStringConnection">
+            <summary>
+            SQL String connection to instantiate a connection.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Repositories.BaseRepository.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Repositories.BaseRepository.#ctor(System.String)">
+            <summary>
+            Default constructor. Gets SQL string connection, instantiate and stores the new connection.
+            </summary>
+            <param name="SqlStringConnection">Full string SQL connection</param>
+        </member>
+        <member name="M:CSharpMiscLibrary.Repositories.BaseRepository.GetConnection">
+            <summary>
+            Get DB connection and instantiates a new one if doesn't exist.
+            </summary>
+            <returns>IDbConnection.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Repositories.BaseRepository.InsertIntoTable``1(System.String,System.Object)">
+            <summary>
+            Middleware function to insert a new row into table.
+            </summary>
+            <typeparam name="T">Dynamic type of used class</typeparam>
+            <param name="sql">Manually written SQL string</param>
+            <param name="parameters">Array of paramaters' objects.</param>
+            <returns>Quantity of affected rows.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Repositories.BaseRepository.QueryFirstOrDefault``1(System.String,System.Object)">
+            <summary>
+            Middleware function to query first/default row from table.
+            </summary>
+            <typeparam name="T">Dynamic type of used class</typeparam>
+            <param name="sql">Manually written SQL string</param>
+            <param name="parameters">Array of paramaters' objects.</param>
+            <returns>Object from same dynamic class type.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Repositories.BaseRepository.Query``1(System.String,System.Object)">
+            <summary>
+            Middleware function to query a list of rows from table.
+            </summary>
+            <typeparam name="T">Dynamic type of used class</typeparam>
+            <param name="sql">Manually written SQL string</param>
+            <param name="parameters">Array of paramaters' objects.</param>
+            <returns>Object list from same dynamic class type.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Repositories.BaseRepository.Execute(System.String,System.Object)">
+            <summary>
+            Middleware function to execute a custom SQL query.
+            </summary>
+            <param name="sql">Manually written SQL string</param>
+            <param name="parameters">Array of paramaters' objects.</param>
+            <returns>Quantity of affected rows.</returns>
+        </member>
+        <member name="T:CSharpMiscLibrary.Services.ConstantsService">
+            <summary>
+            Common service for constants used in all projects.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.SYM_COUNTRY_DENMARK">
+            <summary>
+            Denmark country code.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.SYM_SERVICE_TYPE_EXPORT">
+            <summary>
+            Logistics export symbol.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.SYM_SERVICE_TYPE_IMPORT">
+            <summary>
+            Logistics import symbol.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.SYM_SERVICE_TYPE_DOMESTIC">
+            <summary>
+            Logistics domestic symbol.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.DATE_LOCAL_INV_DEFAULT">
+            <summary>
+            Local default inversed date format.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.DATE_LOCAL_DEFAULT">
+            <summary>
+            Local default date format.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.TIME_LOCAL_DEFAULT">
+            <summary>
+            Local default time format.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.DATE_TIME_FORMAT_SIMPLIFIED_WITHOUT_SECS">
+            <summary>
+            Simplified date time format.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.DATE_TIME_INV_FORMAT_SIMPLIFIED_WITHOUT_SECS">
+            <summary>
+            Simplified inversed date time format.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.CURRENCY_INVOICE_LOCAL_DEFAULT">
+            <summary>
+            Local default currency invoice. For DK: Danish crowns.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.CURRENCY_CODE_DANISH_CROWNS">
+            <summary>
+            Danish crowns currency code.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.CURRENCY_CODE_EUROS">
+            <summary>
+            Euros currency code.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.CARRIER_CODE_DHL">
+            <summary>
+            Carrier code for DHL.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.CARRIER_CODE_UPS">
+            <summary>
+            Carrier code for UPS.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.CARRIER_CODE_GLS">
+            <summary>
+            Carrier code for GLS.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.CARRIER_CODE_FEDEX">
+            <summary>
+            Carrier code for FedEx.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_ONLY_NAME_PDF">
+            <summary>
+            Extension file code for only PDF without dots.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_FULL_PDF">
+            <summary>
+            Extension file code for PDF with dots.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_FULL_REGEX_PDF">
+            <summary>
+            Extension file code for full PDF with dots and asterisk.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_ONLY_NAME_XLSX">
+            <summary>
+            Extension file code for only XLSX without dots.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_FULL_XLSX">
+            <summary>
+            Extension file code for XLSX with dots.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_FULL_REGEX_XLSX">
+            <summary>
+            Extension file code for full XLSX with dots and asterisk.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_ONLY_NAME_XLS">
+            <summary>
+            Extension file code for only XLS without dots.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_FULL_XLS">
+            <summary>
+            Extension file code for XLS with dots.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_FULL_REGEX_XLS">
+            <summary>
+            Extension file code for full XLS with dots and asterisk.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.EXTENSION_MACRO_FILE">
+            <summary>
+            Extension file code for XLSM macro with dots.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.TOTAL_SHIP_TYPE_UNIT_KG">
+            <summary>
+            Weight unit for kilos.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.TOTAL_SHIP_TYPE_UNIT_KG_SMALL">
+            <summary>
+            Simplified weight unit version for kilos.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.TOTAL_SHIP_TYPE_UNIT_LBS">
+            <summary>
+            Weight unit for pounds.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.TOTAL_SHIP_TYPE_UNIT_LBS_SMALL">
+            <summary>
+            Simplified weight unit version for pounds.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.PACKAGE_TYPE_LETTER_SMALL">
+            <summary>
+            Simplified package type version for letters.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.PACKAGE_TYPE_DOC_SMALL">
+            <summary>
+            Simplified package type version for documents.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.PACKAGE_TYPE_UNCLASSIFIED_SMALL">
+            <summary>
+            Simplified package type version for unclassified documents.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.PACKAGE_TYPE_DOCUMENT">
+            <summary>
+            Package type version for documents.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.PACKAGE_TYPE_ENVELOPE">
+            <summary>
+            Package type version for envelope.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.PACKAGE_TYPE_PARCELS">
+            <summary>
+            Package type version for parcels.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.SHIP_CHRG_WEIGHT_TYPE_GROSS">
+            <summary>
+            Simplified chargeable weight version for gross type.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.SHIP_CHRG_WEIGHT_TYPE_VOLUMETRIC">
+            <summary>
+            Simplified chargeable weight version for volumetric type.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.NAME_SW_OFFICE_EXCEL">
+            <summary>
+            Office software name for Excel.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.NAME_SW_OFFICE_WORD">
+            <summary>
+            Office software name for Word.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.NAME_SW_OFFICE_POWERPOINT">
+            <summary>
+            Office software name for Powerpoint.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.NAME_SW_OFFICE_OUTLOOK">
+            <summary>
+            Office software name for Outlook.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.HTTP_CLIENT_TIMEOUT_REQUEST_1_HOUR">
+            <summary>
+            HTTP client timeout request of 1 hour in milliseconds.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.HTTP_CLIENT_TIMEOUT_REQUEST_2_HOURS">
+            <summary>
+            HTTP client timeout request of 2 hours in milliseconds.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.HTTP_CLIENT_REQUEST_METHOD_GET_NAME">
+            <summary>
+            HTTP client method GET mapping symbol.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.HTTP_CLIENT_REQUEST_METHOD_POST_NAME">
+            <summary>
+            HTTP client method POST mapping symbol.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.HTTP_CLIENT_REQUEST_METHOD_PUT_NAME">
+            <summary>
+            HTTP client method PUT mapping symbol.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.ConstantsService.HTTP_CLIENT_REQUEST_METHOD_DELETE_NAME">
+            <summary>
+            HTTP client method DELETE mapping symbol.
+            </summary>
+        </member>
+        <member name="T:CSharpMiscLibrary.Services.DataService">
+            <summary>
+            Common service for data manipulation.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.DataService.IsDigitsOnly(System.String)">
+            <summary>
+            Check if string has only digits.
+            </summary>
+            <param name="str">String to be compared</param>
+            <returns>Boolean status if string has or not only digits</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.DataService.CheckEqual(System.String,System.String)">
+            <summary>
+            Check if strings are equal.
+            </summary>
+            <param name="a">String 1</param>
+            <param name="b">String 2</param>
+            <returns>Boolean status if strings are equal or not.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.DataService.CheckBetween(System.Double,System.Double,System.Double)">
+            <summary>
+            Check if number is between two others.
+            </summary>
+            <param name="num">Compared number</param>
+            <param name="a">Lower possible number</param>
+            <param name="b">Bigger possible number</param>
+            <returns>Boolean status if number is between A and B.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.DataService.IsTextEmptyOrNull(System.String)">
+            <summary>
+            Check if string text is empty or null.
+            </summary>
+            <param name="text">String text</param>
+            <returns>Boolean status if string is empty or null.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.DataService.GetYesterdayWeekDay">
+            <summary>
+            Get yesterday checking if it's a weekday or not (i.e. monday gets friday)
+            </summary>
+            <returns>Yesterday date in string format</returns>
+        </member>
+        <member name="T:CSharpMiscLibrary.Services.IOService">
+            <summary>
+            I/O service methods.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.IOService._copyFileToLocationList(System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Copy single file to a list of directories if they all exist.
+            </summary>
+            <param name="fileOriginPath">Origin file path</param>
+            <param name="fileName">Origin file name</param>
+            <param name="filesDestinationPath">List of destination files' path</param>
+            <returns>Status of the copy (possible or not)</returns>
+        </member>
+        <member name="T:CSharpMiscLibrary.Services.ObjectService">
+            <summary>
+            Common service for object manipulation.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.ObjectService.CreateInstanceFromClassName(System.String)">
+            <summary>
+            Create instance from class name.
+            </summary>
+            <param name="className">Name of the class</param>
+            <returns>Instantiated class.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.ObjectService.ReleaseObject(System.Object)">
+            <summary>
+            Release COM interop service object and then call garbage collector.
+            </summary>
+            <param name="obj">Instance to be released from memory</param>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.ObjectService.ConcatArrays(System.Object[],System.Object[])">
+            <summary>
+            Concat two arrays.
+            Simple version based on: https://msdn.microsoft.com/en-us/library/vstudio/bb302894%28v=vs.100%29.aspx
+            </summary>
+            <param name="front">Array to be appended in the front.</param>
+            <param name="back">Array to be appended in the back.</param>
+            <returns>Combined object array.</returns>
+        </member>
+        <member name="T:CSharpMiscLibrary.Services.SheetsService">
+            <summary>
+            Common service for Excel Sheets.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.SheetsService.DEFAULT_COMPARISON_MODULE">
+            <summary>
+            Default module to be used in FindMatch comparisons.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.SheetsService.DEFAULT_COMPARISON_FN">
+            <summary>
+            Default function/method to be used in FindMatch comparisons.
+            </summary>
+        </member>
+        <member name="F:CSharpMiscLibrary.Services.SheetsService.BETWEEN_COMPARISON_FN">
+            <summary>
+            Check between two numbers function/method to be used in FindMatch comparisons.
+            </summary>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.SheetsService.FindMatch(System.Data.DataTable,CSharpMiscLibrary.Classes.Excel.ExcelPairMatch[],System.Int32[],System.Int32,System.String,System.String,System.Boolean)">
+            <summary>
+            Find multiple/single match from sheet.
+            </summary>
+            <param name="table">DataTable from Excel sheet file</param>
+            <param name="inputObjs">Input cells to be compared</param>
+            <param name="outputPositions">Output cell positions to be returned</param>
+            <param name="headerRow">Position of the header row</param>
+            <param name="moduleName">Delegate module of the comparison function</param>
+            <param name="fnName">Delegate comparison function (proxy function which changes accordingly)</param>
+            <param name="multipleMatch">Sets if the return output must be multiple matches or not</param>
+            <returns>List of lists of found rows with output values</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.SheetsService.GetHeaderRowPos(System.Data.DataTable,System.Int32)">
+            <summary>
+            Get header row position checking last columns for each iterated row.
+            </summary>
+            <param name="table">DataTable from Excel sheet file</param>
+            <param name="rowDefaultPos">Default row position from average files</param>
+            <returns>Found header position or default one.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.SheetsService.CheckAttrHeaderArrayPos(System.Object[],System.Collections.Generic.List{CSharpMiscLibrary.Classes.Excel.ExcelHeaderBinding})">
+            <summary>
+            Get header array texts and check with registered shipment header bindings if columns positions need to be changed.
+            </summary>
+            <param name="headerNames">Array of header texts from file</param>
+            <param name="registeredShipmentHeaderBindings">List of default header names and respective positions</param>
+            <returns>Updated list of shipment header names and positions.</returns>
+        </member>
+        <member name="M:CSharpMiscLibrary.Services.SheetsService.OpenExcelSheetGetInfo(System.String)">
+            <summary>
+            Get DataSet info from excel sheet file.
+            </summary>
+            <param name="filePath">Full excel file path</param>
+            <returns>DataSet Excel Table with sheets and contents.</returns>
+        </member>
+    </members>
+</doc>
