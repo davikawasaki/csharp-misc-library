@@ -14,9 +14,14 @@ namespace CSharpMiscLibrary.Services
     public class SheetsService
     {
         /// <summary>
+        /// Default namespace to be used in FindMatch comparisons.
+        /// </summary>
+        public const string DEFAULT_COMPARISON_NAMESPACE = "CSharpMiscLibrary";
+
+        /// <summary>
         /// Default module to be used in FindMatch comparisons.
         /// </summary>
-        public const string DEFAULT_COMPARISON_MODULE = "CSharpMiscLibrary.Services.DataService";
+        public const string DEFAULT_COMPARISON_MODULE = DEFAULT_COMPARISON_NAMESPACE + ".Services.DataService";
 
         /// <summary>
         /// Default function/method to be used in FindMatch comparisons.
@@ -53,13 +58,16 @@ namespace CSharpMiscLibrary.Services
                         // @Override: if pair match object has a ComparisonMethod, override the normal comparison module and method
                         string fnNameTemp = fnName;
                         string moduleNameTemp = moduleName;
-                        if (!DataService.CheckEqual(pairMatch.ComparisonMethod, fnName) && pairMatch.ColBind != -1)
-                        {
-                            moduleNameTemp = pairMatch.ComparisonModule;
-                            fnNameTemp = pairMatch.ComparisonMethod;
+                        if (pairMatch.ComparisonMethod != null) {
+                            if (!DataService.CheckEqual(pairMatch.ComparisonMethod, fnName) && pairMatch.ColBind != -1)
+                            {
+                                moduleNameTemp = pairMatch.ComparisonModule;
+                                fnNameTemp = pairMatch.ComparisonMethod;
+                            }
                         }
 
-                        Type serviceType = Type.GetType(moduleNameTemp);
+                        var assemblyObjType = AppDomain.CurrentDomain.Load(DEFAULT_COMPARISON_NAMESPACE);
+                        Type serviceType = assemblyObjType.GetType(moduleNameTemp);
                         MethodInfo ComparisonMethod = serviceType.GetMethod(fnNameTemp);
 
                         object[] compMethodParams;
