@@ -15,8 +15,11 @@
     <copyright>Davi Kawasaki 2019</copyright>
     <tags>database services helpers csharp connectors</tags>
     <dependencies>
+      <dependency id="Bundle.Microsoft.Office.Interop" version="15.0.4569" />
       <dependency id="Dapper" version="1.50.5"/>
       <dependency id="ExcelDataReader.DataSet" version="3.4.2"/>
+      <dependency id="Newtonsoft.Json" version="12.0.1" />
+      <dependency id="System.Data.SqlClient" version="4.6.0" />
     </dependencies>
     <summary></summary>
   </metadata>

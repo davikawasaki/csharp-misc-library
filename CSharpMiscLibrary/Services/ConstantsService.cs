@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CSharpMiscLibrary.Services
+﻿namespace CSharpMiscLibrary.Services
 {
     /// <summary>
     /// Common service for constants used in all projects.
